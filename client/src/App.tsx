@@ -16,6 +16,7 @@ import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
+import SearchResults from "@/pages/SearchResults";
 
 import WebStoryView from "./components/web-stories/WebStoryView";
 
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/auth/login" component={SignIn} />
       <Route path="/auth/signup" component={SignUp} />
+      <Route path="/search" component={SearchResults} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
+import AnimatedSearchBar from "@/components/shared/AnimatedSearchBar";
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, User, Settings, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -91,6 +93,7 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
+            <AnimatedSearchBar className="hidden md:block" />
             <ThemeToggle />
             
             {user ? (
@@ -169,6 +172,37 @@ export default function Header() {
             className="md:hidden bg-white dark:bg-gray-800 pb-6 px-4"
           >
             <nav className="flex flex-col space-y-4 pt-2 pb-4">
+              <div className="px-4 py-2">
+                <form 
+                  className="relative"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const input = e.currentTarget.querySelector('input');
+                    if (input && input.value.trim()) {
+                      window.location.href = `/search?q=${encodeURIComponent(input.value)}`;
+                      closeMobileMenu();
+                    }
+                  }}
+                >
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <Search className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <Input 
+                    type="text" 
+                    placeholder="Search..." 
+                    className="pl-10 pr-4 py-2 rounded-full w-full"
+                  />
+                  <Button 
+                    type="submit" 
+                    variant="ghost" 
+                    size="icon"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-7 w-7"
+                  >
+                    <Search className="h-3.5 w-3.5" />
+                  </Button>
+                </form>
+              </div>
+              
               <Link href="/blogs">
                 <div 
                   className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
