@@ -134,7 +134,7 @@ export default function AnimatedSearchBar({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={placeholder}
-                className="w-full pl-10 pr-12 h-10 border-2 border-primary/30 focus:border-primary rounded-full bg-background dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 shadow-sm focus:shadow-md transition-all duration-300"
+                className="w-full pl-10 pr-12 h-10 border-2 border-primary/30 focus:border-primary rounded-full bg-background dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:border-primary/50 dark:focus:border-primary dark:focus:ring-primary/30 shadow-sm focus:shadow-md transition-all duration-300"
               />
               
               {(searchQuery || showSearchButton) && (

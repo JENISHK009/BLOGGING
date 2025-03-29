@@ -235,8 +235,8 @@ export default function BlogPost() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-5">
               <Link href="/blogs">
-                <div className="text-primary hover:text-primary/80 transition-colors flex items-center mb-4 cursor-pointer dark:text-primary/90 dark:hover:text-primary">
-                  <ArrowLeft size={16} className="mr-2 dark:text-primary/90 dark:group-hover:text-primary" />
+                <div className="text-primary hover:text-primary/80 transition-colors flex items-center mb-4 cursor-pointer dark:text-primary dark:hover:text-primary/90 font-medium">
+                  <ArrowLeft size={16} className="mr-2 dark:text-primary" />
                   Back to Blogs
                 </div>
               </Link>

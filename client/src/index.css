@@ -150,6 +150,36 @@
     @apply text-white !important;
   }
   
+  /* Fix text in links, buttons, and interactive elements in dark mode */
+  .dark a, 
+  .dark button, 
+  .dark .link {
+    @apply text-primary hover:text-primary/90;
+  }
+  
+  /* Fix selection and hover states in dark mode */
+  .dark ::selection {
+    @apply bg-primary/30 text-white;
+  }
+  
+  .dark *:hover > .hover\:text-primary,
+  .dark *:hover > .hover\:text-gray-900,
+  .dark *:hover > .hover\:text-gray-800,
+  .dark *:hover > .hover\:text-gray-700 {
+    @apply text-primary;
+  }
+  
+  /* Fix hover colors in navigation */
+  .dark nav a:hover {
+    @apply text-primary;
+  }
+  
+  /* Fix icon colors in links and buttons */
+  .dark a svg, 
+  .dark button svg {
+    @apply text-inherit;
+  }
+  
   /* Fix code blocks and inline code in dark theme */
   .dark pre {
     @apply bg-gray-900 text-gray-100;
