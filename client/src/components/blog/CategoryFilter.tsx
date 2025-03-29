@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { fetchCategories, type Category } from "@/lib/blog-data";
 import { Link, useLocation } from "wouter";
-import { motion } from "framer-motion";
 
 export default function CategoryFilter() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [location] = useLocation();
 
@@ -26,25 +23,13 @@ export default function CategoryFilter() {
     loadCategories();
   }, []);
 
-  const filteredCategories = categories.filter(category => 
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const isCategoryActive = (slug: string) => {
     return location === `/category/${slug}`;
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="text-lg font-bold mb-4">Categories</h3>
-      
-      <Input 
-        type="text"
-        placeholder="Search categories..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4"
-      />
+    <div className="mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+      <h3 className="text-xl font-semibold mb-4">Categories</h3>
       
       <div className="flex flex-wrap gap-2">
         <Button
@@ -54,7 +39,7 @@ export default function CategoryFilter() {
           className="mb-2"
         >
           <Link href="/blogs">
-            <a>All</a>
+            All
           </Link>
         </Button>
         
@@ -65,29 +50,23 @@ export default function CategoryFilter() {
             ))}
           </div>
         ) : (
-          filteredCategories.map((category, index) => (
-            <motion.div
+          categories.map((category) => (
+            <Button
               key={category.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
+              variant={isCategoryActive(category.slug) ? "default" : "outline"}
+              size="sm"
+              asChild
+              className="mb-2"
             >
-              <Button
-                variant={isCategoryActive(category.slug) ? "default" : "outline"}
-                size="sm"
-                asChild
-                className="mb-2"
-              >
-                <Link href={`/category/${category.slug}`}>
-                  <a>{category.name}</a>
-                </Link>
-              </Button>
-            </motion.div>
+              <Link href={`/category/${category.slug}`}>
+                {category.name}
+              </Link>
+            </Button>
           ))
         )}
         
-        {!isLoading && filteredCategories.length === 0 && (
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No categories found.</p>
+        {!isLoading && categories.length === 0 && (
+          <p className="text-gray-500 dark:text-gray-400 text-sm">No categories available.</p>
         )}
       </div>
     </div>

@@ -25,13 +25,11 @@ type QuickSignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function HeroSection() {
   const ref = useRef(null);
+  // Remove fade-out animation as requested
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -93,62 +91,19 @@ export default function HeroSection() {
     },
   };
 
-  // Floating elements animation
-  const floatingElements = [
-    {
-      icon: "📝",
-      style: "top-[15%] right-[10%] w-16 h-16",
-      animation: {
-        y: [0, -20, 0],
-        x: [0, 10, 0],
-        rotate: [0, 5, 0],
-        transition: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.2 },
-      },
-    },
-    {
-      icon: "🔍",
-      style: "top-[60%] left-[5%] w-12 h-12",
-      animation: {
-        y: [0, 15, 0],
-        x: [0, -10, 0],
-        rotate: [0, -5, 0],
-        transition: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
-      },
-    },
-    {
-      icon: "📊",
-      style: "bottom-[20%] right-[15%] w-14 h-14",
-      animation: {
-        y: [0, 10, 0],
-        x: [0, -5, 0],
-        rotate: [0, 3, 0],
-        transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 },
-      },
-    },
-  ];
+  // Removed floating elements as requested
 
   return (
     <div ref={ref} className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background min-h-screen">
       {/* Decorative background elements */}
+      {/* Background gradient decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[30%] -right-[10%] w-[70%] h-[70%] bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-[10%] -left-[10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-3xl"></div>
-        
-        {/* Floating animated elements */}
-        {floatingElements.map((el, index) => (
-          <motion.div
-            key={index}
-            className={`absolute ${el.style} bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg z-10 hidden md:flex`}
-            animate={el.animation}
-          >
-            <span className="text-2xl">{el.icon}</span>
-          </motion.div>
-        ))}
       </div>
 
       <motion.div 
         className="container mx-auto px-4 pt-32 pb-20 md:pt-40 md:pb-32"
-        style={{ y, opacity }}
       >
         <div className="flex flex-col items-center text-center mb-10">
           <motion.h1
