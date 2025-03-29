@@ -1,0 +1,154 @@
+🎯 Project Overview:
+Create a Next.js-based blogging website with top-tier SEO, advanced animations, modern UI/UX, dark & light mode, and Web Stories integration. This website should be highly engaging, fast, and optimized for search engines (Google SEO, Core Web Vitals).
+
+🌍 Core Features:
+✅ SEO-Optimized (SSR, SSG, Lazy Loading, Schema Markup)
+✅ Dark & Light Mode (User Preference Toggle)
+✅ Framer Motion + Three.js for 3D Animations
+✅ AMP Web Stories for SEO & Engagement
+✅ Fast & Scalable (Next.js, Tailwind CSS, PostgreSQL/MongoDB)
+✅ Trending UI/UX (Glassmorphism, Neumorphism, Minimalist Design)
+✅ CMS Integration (Sanity, Contentful, or MDX)
+✅ Social Login (Google, GitHub, Email)
+✅ Monetization Ready (Google AdSense, Affiliate Marketing)
+
+📌 Pages & Components
+1️⃣ Home Page (/) 🏡
+Purpose: Displays featured content, trending blogs, and interactive elements.
+🔹 Components:
+
+Hero Section → Engaging intro with CTA
+
+Trending Blogs Slider → Animated carousel
+
+Categories Section → Interactive category filters
+
+Latest Blogs Grid → Lazy-loaded masonry layout
+
+Web Stories Section → AMP-powered short-form content
+
+Newsletter Subscription → Email opt-in for audience growth
+
+Author Spotlight → Featured writer profiles
+
+2️⃣ Blog Listing Page (/blogs) 📑
+Purpose: Displays all blogs with filtering and sorting.
+🔹 Components:
+
+Filter & Search Bar → Sort by date, category, popularity
+
+Blog Cards → Preview with featured image & snippet
+
+Sidebar → Popular Blogs, Categories, Tags
+
+Pagination / Infinite Scroll → Load more blogs dynamically
+
+3️⃣ Single Blog Page (/blogs/[slug]) 📝
+Purpose: Show full blog content with SEO optimizations.
+🔹 Components:
+
+Title & Meta Tags → SEO-friendly headers
+
+Hero Image → High-quality cover photo
+
+Author & Publish Date → Author credibility
+
+Table of Contents (Auto-Generated) → Anchor links for navigation
+
+Blog Content (MDX/Markdown) → Rich text formatting
+
+Code Blocks (If tech blog) → Syntax highlighting
+
+Related Posts → Increase engagement
+
+Social Share Buttons → One-click sharing
+
+Comment Section → Disqus / Firebase / Custom comments
+
+4️⃣ Categories Page (/category/[category]) 🏷️
+Purpose: Display posts under a specific category.
+🔹 Components:
+
+Category Banner → Displays category name & description
+
+Blogs Grid → Dynamic list of blogs in the category
+
+Sidebar → Related categories & tags
+
+5️⃣ Web Stories Page (/stories) 📖
+Purpose: Showcase AMP-powered interactive stories for better SEO & user retention.
+🔹 Components:
+
+Interactive Stories Carousel → Swipeable short stories
+
+Story Cards → Tappable content previews
+
+6️⃣ About Page (/about) 👤
+Purpose: Introduces the website, authors, and mission.
+🔹 Components:
+
+Team Members Section → Profile images, bios, social links
+
+Mission & Vision → Website purpose & values
+
+Tech Stack Used → Tools & frameworks powering the website
+
+7️⃣ Contact Page (/contact) 📬
+Purpose: Provide communication options.
+🔹 Components:
+
+Contact Form → User inquiries (with backend API)
+
+Social Media Links → Direct engagement options
+
+8️⃣ Authentication (/auth/login & /auth/register) 🔐
+Purpose: Secure user access for exclusive content.
+🔹 Components:
+
+Social Login (Google, GitHub, Email)
+
+Password Reset & Secure Authentication
+
+9️⃣ Admin Dashboard (/dashboard) 📊
+Purpose: Content management for blog authors.
+🔹 Components:
+
+Create, Edit, Delete Blogs
+
+Manage Comments & User Engagement
+
+Analytics Dashboard (Page Views, Engagement, SEO Stats)
+
+🛠️ Tech Stack & Best Practices:
+✅ Frontend: Next.js (App Router), Tailwind CSS, Framer Motion
+✅ Backend: Next.js API Routes / Node.js + Express
+✅ Database: PostgreSQL / MongoDB
+✅ CMS: Sanity, Contentful, or MDX for static content
+✅ Authentication: NextAuth.js / Firebase
+✅ Performance Optimizations:
+
+Lazy Loading Images (Next.js Image Optimization)
+
+Server-Side Rendering (SSR) & Static Site Generation (SSG)
+
+Schema Markup & Rich Snippets for SEO
+✅ Hosting & Deployment: Vercel / AWS
+
+🎯 Expected Output:
+A high-performance, visually stunning, SEO-friendly blogging website with:
+✅ Fast Load Times (Optimized for Core Web Vitals)
+✅ Interactive UI with Animations (Framer Motion, Three.js)
+✅ SEO-Optimized Blogs & Web Stories (Google Ranking Ready)
+✅ Dark & Light Mode Support
+✅ Social Media Integration & Engagement Boosters
+✅ Scalable, Secure, and Monetization-Ready
+
+🔹 Final Request:
+Follow clean code architecture with reusable components.
+
+Ensure high accessibility (WCAG compliance).
+
+Implement error handling, loading states, and skeleton UI.
+
+Provide clear documentation & folder structure.
+
