@@ -217,17 +217,22 @@ export default function BlogList() {
             </div>
           </motion.div>
           
-          {/* Mobile filter toggle */}
+          {/* Mobile filter toggle - Enhanced with classic styling */}
           <div className="lg:hidden mb-6">
             <Button 
               variant="outline" 
               size="lg"
-              className="w-full gap-2 text-base border-primary/20"
+              className="w-full gap-2 text-base border border-primary/20 bg-background/50 backdrop-blur-sm shadow-sm hover:bg-primary/5 transition-all duration-300"
               onClick={() => setShowMobileFilters(!showMobileFilters)}
             >
-              <Filter className="h-5 w-5" />
-              Filters & Sort
-              {showMobileFilters ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              <Filter className="h-5 w-5 text-primary/80" />
+              <span className="font-serif">Filters & Categories</span>
+              <div className="ml-auto bg-primary/10 rounded-full p-1">
+                {showMobileFilters ? 
+                  <ChevronUp className="h-4 w-4 text-primary" /> : 
+                  <ChevronDown className="h-4 w-4 text-primary" />
+                }
+              </div>
             </Button>
           </div>
           
@@ -237,7 +242,7 @@ export default function BlogList() {
               {(showMobileFilters || window.innerWidth >= 1024) && (
                 <motion.div 
                   ref={filterRef}
-                  className={`${showMobileFilters ? 'fixed inset-0 z-50 bg-background/80 backdrop-blur-sm pt-20 px-4 pb-4 overflow-auto lg:static lg:bg-transparent lg:pt-0 lg:px-0 lg:pb-0 lg:z-auto lg:col-span-1' : 'lg:block hidden lg:col-span-1'}`}
+                  className={`${showMobileFilters ? 'fixed inset-0 z-50 bg-background/90 backdrop-blur-md pt-20 px-4 pb-4 overflow-auto lg:static lg:bg-transparent lg:pt-0 lg:px-0 lg:pb-0 lg:z-auto lg:col-span-1' : 'lg:block hidden lg:col-span-1'}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
@@ -247,17 +252,17 @@ export default function BlogList() {
                   {showMobileFilters && (
                     <div className="lg:hidden absolute top-4 right-4">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="icon"
                         onClick={() => setShowMobileFilters(false)}
-                        className="text-primary"
+                        className="border border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary/5 transition-all rounded-full w-10 h-10"
                       >
-                        <X className="h-6 w-6" />
+                        <X className="h-5 w-5 text-primary" />
                       </Button>
                     </div>
                   )}
                   
-                  <div className="space-y-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-primary/10">
+                  <div className="space-y-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-primary/10 backdrop-blur-sm">
                     {/* Classic design title */}
                     <div className="relative">
                       <div className="absolute -top-8 -left-8 w-16 h-16 bg-primary/10 rounded-full"></div>

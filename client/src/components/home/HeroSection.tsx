@@ -72,22 +72,27 @@ export default function HeroSection() {
     },
   };
 
-  // Floating animation for decorative elements
-  const floatingAnimation = {
-    y: {
-      from: 0,
-      to: [15, 0, 15],
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-    filter: {
-      from: "blur(10px)",
-      to: ["blur(12px)", "blur(10px)", "blur(12px)"],
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
+  // Floating animation variants for decorative elements
+  const floatingVariants = {
+    float: {
+      y: [0, 15, 0],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+  
+  const floatingVariantsAlt = {
+    float: {
+      y: [0, -15, 0],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
   };
 
   return (
@@ -95,20 +100,13 @@ export default function HeroSection() {
       {/* Classic decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
-          animate={floatingAnimation}
+          variants={floatingVariants}
+          animate="float"
           className="absolute -top-[40%] left-[10%] w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl"
         />
         <motion.div 
-          animate={{
-            ...floatingAnimation,
-            y: {
-              from: 0,
-              to: [-15, 0, -15],
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }
-          }}
+          variants={floatingVariantsAlt}
+          animate="float"
           className="absolute top-[60%] -right-[20%] w-[70%] h-[70%] bg-primary/10 rounded-full blur-3xl"
         />
       </div>

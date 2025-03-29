@@ -239,27 +239,35 @@ export default function WebStoryView() {
               </div>
             </div>
 
-            {/* Navigation controls */}
-            <button 
-              onClick={() => {
-                setIsExiting(true);
-                setTimeout(() => {
-                  navigate("/web-stories");
-                }, 300);
-              }}
-              className="absolute top-4 right-4 z-10 text-white p-2 rounded-full bg-black/30 backdrop-blur-sm"
-              aria-label="Close story"
-            >
-              <X size={20} />
-            </button>
+            {/* Navigation controls - Improved close and share buttons */}
+            <div className="absolute top-4 right-4 z-10 flex items-center space-x-3">
+              <motion.button 
+                onClick={shareStory}
+                className="text-white p-3 rounded-full bg-black/50 backdrop-blur-md hover:bg-black/70 transition-all border border-white/10 shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Share story"
+              >
+                <Share2 size={20} />
+              </motion.button>
 
-            <button 
-              onClick={shareStory}
-              className="absolute top-4 right-16 z-10 text-white p-2 rounded-full bg-black/30 backdrop-blur-sm"
-              aria-label="Share story"
-            >
-              <Share2 size={20} />
-            </button>
+              <motion.button 
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent event bubbling
+                  setIsExiting(true);
+                  setTimeout(() => {
+                    navigate("/web-stories");
+                  }, 300);
+                }}
+                className="text-white p-3 rounded-full bg-black/50 backdrop-blur-md hover:bg-black/70 transition-all border border-white/10 shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Close story"
+                style={{ zIndex: 50 }} // Ensure high z-index
+              >
+                <X size={20} />
+              </motion.button>
+            </div>
 
             {/* Story pages */}
             <AnimatePresence mode="wait">

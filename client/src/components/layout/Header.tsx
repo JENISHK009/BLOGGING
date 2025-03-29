@@ -45,11 +45,14 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  // Glass effect classes with less obtrusive background
+  // Enhanced classic glass effect with subtle border and elegant shadow
   const glassClasses = `
     fixed top-0 left-0 right-0 z-50 
-    ${isScrolled ? "backdrop-blur-sm bg-background/50 shadow-sm" : "bg-transparent"}
-    transition-all duration-300
+    ${isScrolled 
+      ? "backdrop-blur-md bg-background/80 shadow-md border-b border-primary/10" 
+      : "bg-transparent backdrop-blur-sm"
+    }
+    transition-all duration-500
   `;
 
   return (
@@ -57,39 +60,46 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/">
-            <div className="flex items-center space-x-2 cursor-pointer">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
-                BG
+            <div className="flex items-center space-x-3 cursor-pointer group">
+              <div className="w-10 h-10 rounded-lg relative overflow-hidden">
+                {/* Classic decorative elements for logo */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary transform group-hover:scale-105 transition-transform duration-300"></div>
+                <div className="absolute inset-0 border-2 border-white/20 rounded-lg"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="font-serif font-bold text-xl text-white filter drop-shadow-sm">BG</span>
+                </div>
               </div>
-              <span className="font-inter font-bold text-xl">Bloggers Ground</span>
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-xl tracking-tight group-hover:text-primary transition-colors">Bloggers Ground</span>
+                <span className="text-xs text-muted-foreground/70 font-medium tracking-wide uppercase">Classic Blogging</span>
+              </div>
             </div>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/blogs">
-              <span className={cn("font-medium transition-colors cursor-pointer", 
-                location === "/blogs" ? "text-primary" : "hover:text-primary")}>
-                Blogs
-              </span>
-            </Link>
-            <Link href="/web-stories">
-              <span className={cn("font-medium transition-colors cursor-pointer", 
-                location === "/web-stories" ? "text-primary" : "hover:text-primary")}>
-                Web Stories
-              </span>
-            </Link>
-            <Link href="/about">
-              <span className={cn("font-medium transition-colors cursor-pointer", 
-                location === "/about" ? "text-primary" : "hover:text-primary")}>
-                About
-              </span>
-            </Link>
-            <Link href="/contact">
-              <span className={cn("font-medium transition-colors cursor-pointer", 
-                location === "/contact" ? "text-primary" : "hover:text-primary")}>
-                Contact
-              </span>
-            </Link>
+            {[
+              { href: "/blogs", label: "Blogs" },
+              { href: "/web-stories", label: "Web Stories" },
+              { href: "/about", label: "About" },
+              { href: "/contact", label: "Contact" }
+            ].map((link) => (
+              <Link key={link.href} href={link.href}>
+                <div className="relative group cursor-pointer">
+                  <span className={cn(
+                    "font-serif font-medium text-base transition-colors", 
+                    location === link.href ? "text-primary" : "hover:text-primary"
+                  )}>
+                    {link.label}
+                  </span>
+                  <div className={cn(
+                    "absolute -bottom-1 left-0 w-full h-0.5 transform origin-left transition-transform duration-300",
+                    location === link.href 
+                      ? "bg-primary scale-x-100" 
+                      : "bg-primary/40 scale-x-0 group-hover:scale-x-100"
+                  )}></div>
+                </div>
+              </Link>
+            ))}
           </nav>
           
           <div className="flex items-center space-x-4">
