@@ -83,6 +83,28 @@
     @apply text-inherit;
   }
   
+  /* General text visibility in dark mode */
+  .dark p, 
+  .dark h1, 
+  .dark h2, 
+  .dark h3, 
+  .dark h4, 
+  .dark h5, 
+  .dark h6, 
+  .dark span:not([class*="text-"]) {
+    @apply text-gray-200;
+  }
+  
+  .dark .text-gray-600,
+  .dark .text-gray-700,
+  .dark .text-gray-800 {
+    @apply text-gray-300;
+  }
+  
+  .dark .text-muted-foreground {
+    @apply text-gray-400;
+  }
+  
   /* Fix code blocks and inline code in dark theme */
   .dark pre {
     @apply bg-gray-900 text-gray-100;
