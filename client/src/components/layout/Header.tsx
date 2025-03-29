@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,32 +42,39 @@ export default function Header() {
     <header className={glassClasses}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div className="flex items-center space-x-2">
-            <Link href="/">
-              <a className="flex items-center space-x-2">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
-                  B
-                </div>
-                <span className="font-inter font-bold text-xl">BlogWave</span>
-              </a>
-            </Link>
-          </div>
+          <Link href="/">
+            <div className="flex items-center space-x-2 cursor-pointer">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
+                BG
+              </div>
+              <span className="font-inter font-bold text-xl">Bloggers Ground</span>
+            </div>
+          </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/blogs">
-              <a className={`font-medium transition-colors ${location === "/blogs" ? "text-primary" : "hover:text-primary"}`}>
+              <span className={cn("font-medium transition-colors cursor-pointer", 
+                location === "/blogs" ? "text-primary" : "hover:text-primary")}>
                 Blogs
-              </a>
+              </span>
+            </Link>
+            <Link href="/web-stories">
+              <span className={cn("font-medium transition-colors cursor-pointer", 
+                location === "/web-stories" ? "text-primary" : "hover:text-primary")}>
+                Web Stories
+              </span>
             </Link>
             <Link href="/about">
-              <a className={`font-medium transition-colors ${location === "/about" ? "text-primary" : "hover:text-primary"}`}>
+              <span className={cn("font-medium transition-colors cursor-pointer", 
+                location === "/about" ? "text-primary" : "hover:text-primary")}>
                 About
-              </a>
+              </span>
             </Link>
             <Link href="/contact">
-              <a className={`font-medium transition-colors ${location === "/contact" ? "text-primary" : "hover:text-primary"}`}>
+              <span className={cn("font-medium transition-colors cursor-pointer", 
+                location === "/contact" ? "text-primary" : "hover:text-primary")}>
                 Contact
-              </a>
+              </span>
             </Link>
           </nav>
           
@@ -79,7 +87,7 @@ export default function Header() {
               asChild
             >
               <Link href="/auth/login">
-                <a>Sign In</a>
+                <span>Sign In</span>
               </Link>
             </Button>
             
@@ -106,36 +114,44 @@ export default function Header() {
           >
             <nav className="flex flex-col space-y-4 pt-2 pb-4">
               <Link href="/blogs">
-                <a 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                <div 
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Blogs
-                </a>
+                </div>
+              </Link>
+              <Link href="/web-stories">
+                <div 
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                  onClick={closeMobileMenu}
+                >
+                  Web Stories
+                </div>
               </Link>
               <Link href="/about">
-                <a 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                <div 
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   About
-                </a>
+                </div>
               </Link>
               <Link href="/contact">
-                <a 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                <div 
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Contact
-                </a>
+                </div>
               </Link>
               <Link href="/auth/login">
-                <a 
-                  className="py-2 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition font-medium text-center"
+                <div 
+                  className="py-2 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition font-medium text-center cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Sign In
-                </a>
+                </div>
               </Link>
             </nav>
           </motion.div>

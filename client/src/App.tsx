@@ -9,8 +9,11 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import BlogList from "@/pages/BlogList";
 import BlogPost from "@/pages/BlogPost";
+import WebStories from "@/pages/WebStories";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+
+import WebStoryView from "./components/web-stories/WebStoryView";
 
 function Router() {
   return (
@@ -19,6 +22,8 @@ function Router() {
       <Route path="/blogs" component={BlogList} />
       <Route path="/blogs/:slug" component={BlogPost} />
       <Route path="/category/:category" component={BlogList} />
+      <Route path="/web-stories" component={WebStories} />
+      <Route path="/web-stories/:slug" component={WebStoryView} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
