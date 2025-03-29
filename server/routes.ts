@@ -10,7 +10,7 @@ import {
   insertWaitlistSchema,
 } from "@shared/schema";
 import { z } from "zod";
-import { ZodError } from "zod-validation-error";
+import { fromZodError } from "zod-validation-error";
 
 // Helper function to handle validation errors
 const validateRequest = (schema: z.ZodSchema<any>, data: any) => {
@@ -20,7 +20,7 @@ const validateRequest = (schema: z.ZodSchema<any>, data: any) => {
     if (error instanceof z.ZodError) {
       return { 
         success: false, 
-        error: new ZodError(error).message 
+        error: fromZodError(error).message 
       };
     }
     return { 
