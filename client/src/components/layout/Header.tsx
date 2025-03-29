@@ -118,11 +118,11 @@ export default function Header() {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal dark:text-gray-100">
+                <DropdownMenuContent className="w-56 dropdown-menu-content" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none dark:text-white">{user.fullName || user.username}</p>
-                      <p className="text-xs leading-none text-muted-foreground dark:text-gray-400">{user.email}</p>
+                      <p className="text-sm font-medium leading-none">{user.fullName || user.username}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />

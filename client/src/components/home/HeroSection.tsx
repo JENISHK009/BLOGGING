@@ -182,7 +182,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 mb-2 dark:from-primary dark:to-primary/90"
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 mb-2"
               >
                 SEO-Optimized Blogging
               </motion.span>

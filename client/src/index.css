@@ -105,6 +105,51 @@
     @apply text-gray-400;
   }
   
+  /* Remove transparent text in dark mode */
+  .dark .text-transparent {
+    @apply text-white;
+  }
+  
+  /* Ensure all gradient text is visible in dark mode */
+  .dark .bg-clip-text.bg-gradient-to-r,
+  .dark .bg-clip-text.bg-gradient-to-b,
+  .dark .bg-clip-text.bg-gradient-to-l,
+  .dark .bg-clip-text.bg-gradient-to-t {
+    @apply text-white bg-none;
+  }
+  
+  /* Improve dropdown menu visibility in dark mode */
+  .dark .dropdown-menu-content,
+  .dark .popover-content,
+  .dark .dialog-content {
+    @apply bg-gray-800 border-gray-700 text-white;
+  }
+  
+  /* Enhance text visibility in cards for dark mode */
+  .dark .card {
+    @apply bg-gray-800 text-white border-gray-700;
+  }
+  
+  /* Fix text in form controls for dark mode */
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    @apply text-gray-500;
+  }
+  
+  /* Fix badges and tags in dark mode */
+  .dark .badge {
+    @apply bg-gray-700 text-white;
+  }
+  
+  /* Ensure all text elements in dark mode are visible */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-white;
+  }
+  
+  .dark .text-transparent {
+    @apply text-white !important;
+  }
+  
   /* Fix code blocks and inline code in dark theme */
   .dark pre {
     @apply bg-gray-900 text-gray-100;
