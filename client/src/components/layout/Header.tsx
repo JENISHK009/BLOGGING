@@ -45,12 +45,12 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  // Enhanced classic glass effect with subtle border and elegant shadow
+  // Enhanced classic glass effect with better dark mode contrast
   const glassClasses = `
     fixed top-0 left-0 right-0 z-50 
     ${isScrolled 
-      ? "backdrop-blur-md bg-background/90 shadow-md border-b border-primary/10" 
-      : "bg-background/50 backdrop-blur-md"
+      ? "backdrop-blur-md bg-background/95 shadow-md border-b dark:border-gray-800 border-primary/10 dark:shadow-black/30" 
+      : "bg-background/70 dark:bg-background/90 backdrop-blur-md"
     }
     transition-all duration-500
   `;
@@ -179,7 +179,7 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white dark:bg-gray-800 pb-6 px-4"
+            className="md:hidden bg-white dark:bg-gray-800/95 pb-6 px-4 border-t dark:border-gray-700 shadow-lg dark:shadow-black/30"
           >
             <nav className="flex flex-col space-y-4 pt-2 pb-4">
               <div className="px-4 py-2">
@@ -215,7 +215,7 @@ export default function Header() {
               
               <Link href="/blogs">
                 <div 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Blogs
@@ -223,7 +223,7 @@ export default function Header() {
               </Link>
               <Link href="/web-stories">
                 <div 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Web Stories
@@ -231,7 +231,7 @@ export default function Header() {
               </Link>
               <Link href="/about">
                 <div 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   About
@@ -239,7 +239,7 @@ export default function Header() {
               </Link>
               <Link href="/contact">
                 <div 
-                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                  className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 rounded-md transition-colors cursor-pointer"
                   onClick={closeMobileMenu}
                 >
                   Contact
@@ -255,7 +255,7 @@ export default function Header() {
                     </div>
                   </div>
                   <div
-                    className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                    className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 rounded-md transition-colors cursor-pointer"
                     onClick={() => {
                       logoutMutation.mutate();
                       closeMobileMenu();

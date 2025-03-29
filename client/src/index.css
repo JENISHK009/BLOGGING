@@ -23,7 +23,7 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
   
-  /* Fix text visibility in dark theme */
+  /* Fix text visibility in dark theme - comprehensive overrides */
   .dark .text-gray-600 {
     @apply text-gray-300;
   }
@@ -38,6 +38,76 @@
   
   .dark .text-gray-900 {
     @apply text-white;
+  }
+  
+  /* Additional dark theme fixes */
+  .dark p {
+    @apply text-gray-300;
+  }
+  
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-white;
+  }
+  
+  .dark .bg-white {
+    @apply bg-gray-800;
+  }
+  
+  .dark .border-gray-200 {
+    @apply border-gray-700;
+  }
+  
+  /* Form elements in dark mode */
+  .dark input[type="text"],
+  .dark input[type="email"],
+  .dark input[type="password"],
+  .dark input[type="search"],
+  .dark textarea,
+  .dark select {
+    @apply bg-gray-800 border-gray-700 text-gray-200 placeholder-gray-500;
+  }
+  
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    @apply border-primary/50 ring-primary/30 text-white;
+  }
+  
+  /* Button in dark mode */
+  .dark button[type="submit"] {
+    @apply bg-primary text-white hover:bg-primary/90;
+  }
+  
+  /* Fix code blocks and inline code in dark theme */
+  .dark pre {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  .dark code {
+    @apply bg-gray-800 text-gray-100 border border-gray-700;
+  }
+  
+  /* Fix blockquotes in dark theme */
+  .dark blockquote {
+    @apply border-l-4 border-gray-700 bg-gray-800/50 text-gray-300;
+  }
+  
+  /* Fix table in dark theme */
+  .dark table {
+    @apply border-gray-700;
+  }
+  
+  .dark th {
+    @apply bg-gray-800 text-gray-100 border-gray-700;
+  }
+  
+  .dark td {
+    @apply border-gray-700 text-gray-300;
+  }
+  
+  /* Fix highlighted text in dark theme */
+  .dark mark {
+    @apply bg-primary/20 text-gray-100;
   }
   
   /* Ensure proper padding for pages with header */
@@ -84,7 +154,13 @@
 }
 
 .prose pre {
-  @apply bg-gray-800 dark:bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-6;
+  @apply bg-gray-800 dark:bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-6 border dark:border-gray-700;
+}
+
+/* Better code highlighting in dark mode */
+.dark .prose pre {
+  @apply bg-gray-900 text-gray-100 shadow-md;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) inset;
 }
 
 .prose img {

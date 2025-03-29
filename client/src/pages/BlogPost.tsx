@@ -345,9 +345,9 @@ export default function BlogPost() {
               <aside className="order-2 lg:order-1 col-span-1">
                 <div className="lg:sticky lg:top-24">
                   {tableOfContents.length > 0 && (
-                    <Card className="mb-6">
+                    <Card className="mb-6 border border-gray-200 dark:border-gray-700 dark:bg-gray-800/90">
                       <CardContent className="p-4">
-                        <h3 className="text-lg font-bold mb-3 flex items-center">
+                        <h3 className="text-lg font-bold mb-3 flex items-center dark:text-white">
                           <BookOpen size={18} className="mr-2 text-primary" />
                           Table of Contents
                         </h3>
@@ -360,8 +360,8 @@ export default function BlogPost() {
                                 className={`
                                   block py-1 pl-${(item.level - 2) * 3} border-l-2 
                                   ${activeHeading === item.id 
-                                    ? 'border-primary text-primary font-medium' 
-                                    : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
+                                    ? 'border-primary text-primary font-medium dark:text-primary dark:font-semibold' 
+                                    : 'border-transparent hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary'
                                   }
                                   transition-colors text-sm
                                 `}
@@ -400,7 +400,7 @@ export default function BlogPost() {
               {/* Main content */}
               <div className="order-1 lg:order-2 col-span-1 lg:col-span-3" ref={contentRef}>
                 <div 
-                  className="prose prose-lg dark:prose-invert max-w-none mb-10"
+                  className="prose prose-lg dark:prose-invert max-w-none mb-10 dark:prose-headings:text-white dark:prose-p:text-gray-300 dark:prose-strong:text-gray-200 dark:prose-code:text-gray-200 dark:prose-code:bg-gray-800 dark:prose-code:border-gray-700 dark:prose-pre:bg-gray-900 dark:prose-pre:text-gray-100"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
                 
