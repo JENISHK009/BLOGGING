@@ -5,13 +5,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { fetchPostBySlug, type Post } from "@/lib/blog-data";
+import { fetchPostBySlug, fetchPosts, type Post } from "@/lib/blog-data";
+import { marked } from "marked";
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
 export default function BlogPost() {
   const { slug } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,6 +24,15 @@ export default function BlogPost() {
       try {
         const data = await fetchPostBySlug(slug);
         setPost(data);
+        
+        // Load related posts from the same category
+        if (data) {
+          const allPosts = await fetchPosts();
+          const filtered = allPosts
+            .filter(p => p.id !== data.id && p.category.id === data.category.id)
+            .slice(0, 2);
+          setRelatedPosts(filtered);
+        }
       } catch (error) {
         console.error("Error fetching post:", error);
       } finally {
@@ -64,7 +75,7 @@ export default function BlogPost() {
             </p>
             <Button asChild>
               <Link href="/blogs">
-                <a>Browse All Blogs</a>
+                Browse All Blogs
               </Link>
             </Button>
           </div>
@@ -73,20 +84,31 @@ export default function BlogPost() {
     );
   }
 
-  // Display a placeholder blog with dummy content
+  // Format the date
+  const publishDate = new Date(post.published_at);
+  const formattedDate = publishDate.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+  
+  // Convert markdown to HTML
+  const postContentHtml = marked(post.content);
+
   return (
     <>
       <Helmet>
-        <title>Building the Ultimate Blog Platform | BlogWave</title>
-        <meta name="description" content="Learn about the features and benefits of modern blogging platforms and how they can help you grow your audience." />
-        <meta property="og:title" content="Building the Ultimate Blog Platform | BlogWave" />
-        <meta property="og:description" content="Learn about the features and benefits of modern blogging platforms and how they can help you grow your audience." />
+        <title>{post.title} | Bloggers Ground</title>
+        <meta name="description" content={post.excerpt} />
+        <meta property="og:title" content={`${post.title} | Bloggers Ground`} />
+        <meta property="og:description" content={post.excerpt} />
         <meta property="og:type" content="article" />
-        <meta property="article:published_time" content="2023-05-15T10:00:00+00:00" />
-        <meta property="article:author" content="Sarah Johnson" />
-        <meta property="article:section" content="Technology" />
-        <meta property="article:tag" content="Blogging" />
-        <meta property="article:tag" content="SEO" />
+        <meta property="article:published_time" content={post.published_at} />
+        <meta property="article:author" content={post.author.name} />
+        <meta property="article:section" content={post.category.name} />
+        {post.tags.map(tag => (
+          <meta key={tag.id} property="article:tag" content={tag.name} />
+        ))}
       </Helmet>
 
       <AnimatedSection className="py-20">
@@ -99,23 +121,33 @@ export default function BlogPost() {
               className="mb-8"
             >
               <Link href="/blogs">
-                <a className="text-primary hover:text-primary/80 transition-colors flex items-center mb-4">
-                  <i className="fas fa-arrow-left mr-2"></i>
+                <div className="text-primary hover:text-primary/80 transition-colors flex items-center mb-4 cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
                   Back to Blogs
-                </a>
+                </div>
               </Link>
               
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">Building the Ultimate Blog Platform</h1>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
               
               <div className="flex flex-wrap items-center gap-4 mb-8">
-                <Badge variant="outline">Technology</Badge>
+                <Badge variant="outline">{post.category.name}</Badge>
                 <span className="text-gray-500 dark:text-gray-400">
-                  <i className="far fa-calendar mr-1"></i>
-                  May 15, 2023
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-1">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  {formattedDate}
                 </span>
                 <span className="text-gray-500 dark:text-gray-400">
-                  <i className="far fa-eye mr-1"></i>
-                  2,547 views
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline mr-1">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  {post.views.toLocaleString()} views
                 </span>
               </div>
             </motion.div>
@@ -127,20 +159,22 @@ export default function BlogPost() {
               className="rounded-xl overflow-hidden mb-10"
             >
               <img 
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
-                alt="Building the Ultimate Blog Platform" 
+                src={post.cover_image} 
+                alt={post.title} 
                 className="w-full h-auto"
               />
             </motion.div>
             
             <div className="flex items-center mb-8">
               <Avatar className="h-12 w-12 mr-4">
-                <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=100&h=100&q=80" alt="Sarah Johnson" />
-                <AvatarFallback>SJ</AvatarFallback>
+                <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                <AvatarFallback>
+                  {post.author.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                </AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-semibold">Sarah Johnson</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Content Strategist & SEO Expert</p>
+                <p className="font-semibold">{post.author.name}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{post.author.bio.split('.')[0]}</p>
               </div>
             </div>
             
@@ -148,104 +182,37 @@ export default function BlogPost() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="prose prose-lg dark:prose-invert max-w-none"
-            >
-              <h2>Introduction to Modern Blogging</h2>
-              <p>
-                In the ever-evolving digital landscape, blogging has transformed from simple online journaling to sophisticated content marketing platforms. The most successful blogs today combine engaging content with powerful technical features that enhance both user experience and search engine visibility.
-              </p>
-              
-              <p>
-                The key to building a successful blog in today's competitive environment lies in prioritizing three critical elements:
-              </p>
-              
-              <ul>
-                <li>Technical excellence and SEO optimization</li>
-                <li>Engaging user experience with modern design</li>
-                <li>Monetization strategies that drive sustainable growth</li>
-              </ul>
-              
-              <h2>SEO: The Foundation of Visibility</h2>
-              <p>
-                Search Engine Optimization remains the cornerstone of any successful blogging platform. Modern blogs need to implement:
-              </p>
-              
-              <ul>
-                <li><strong>Server-Side Rendering (SSR)</strong>: Improves page load times and makes content immediately visible to search engine crawlers</li>
-                <li><strong>Static Site Generation (SSG)</strong>: Pre-renders pages at build time for lightning-fast delivery</li>
-                <li><strong>Schema Markup</strong>: Structured data that helps search engines understand your content and display rich snippets</li>
-                <li><strong>Core Web Vitals optimization</strong>: Focusing on Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS)</li>
-              </ul>
-              
-              <p>
-                Implementing these technical features can dramatically improve organic traffic and visibility, setting your blog apart from competitors who neglect these critical aspects.
-              </p>
-              
-              <blockquote>
-                "The best SEO strategy is to create exceptional content on a technically sound platform. When these elements align, organic growth becomes inevitable."
-              </blockquote>
-              
-              <h2>User Experience: Beyond Aesthetics</h2>
-              <p>
-                While beautiful design attracts users, it's the overall experience that retains them. Modern blogs should feature:
-              </p>
-              
-              <ul>
-                <li><strong>Responsive design</strong> that works flawlessly across all devices</li>
-                <li><strong>Dark mode support</strong> to reduce eye strain and provide options</li>
-                <li><strong>Accessibility features</strong> that make content available to everyone</li>
-                <li><strong>Intuitive navigation</strong> that helps users discover more content</li>
-              </ul>
-              
-              <p>
-                Incorporating micro-interactions and subtle animations can also dramatically improve engagement, creating a memorable experience that encourages users to return and share your content.
-              </p>
-              
-              <h2>Monetization: Sustainable Growth</h2>
-              <p>
-                Building a great blog platform ultimately needs to support business goals. Effective monetization strategies include:
-              </p>
-              
-              <ul>
-                <li>Programmatic advertising with Google AdSense</li>
-                <li>Affiliate marketing with strategically placed links</li>
-                <li>Premium content and subscription models</li>
-                <li>Sponsored content opportunities</li>
-              </ul>
-              
-              <p>
-                The key is implementing these revenue streams without sacrificing user experience or content quality. The best blogging platforms seamlessly integrate monetization in ways that feel natural and non-intrusive.
-              </p>
-              
-              <h2>Conclusion: The Future of Blogging</h2>
-              <p>
-                As we look toward the future, successful blogs will continue to evolve with technology while maintaining focus on what truly matters: valuable content delivered through exceptional user experiences. By building on a foundation of technical excellence, SEO best practices, and thoughtful monetization, bloggers can create platforms that not only attract audiences but sustain long-term growth.
-              </p>
-              
-              <p>
-                The ultimate blog platform isn't just about features—it's about creating a digital environment where content thrives and audiences feel valued and engaged.
-              </p>
-            </motion.div>
+              className="prose prose-lg dark:prose-invert max-w-none mb-8"
+              dangerouslySetInnerHTML={{ __html: postContentHtml }}
+            />
             
             <Separator className="my-8" />
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">Blogging</Badge>
-                <Badge variant="outline">SEO</Badge>
-                <Badge variant="outline">Web Development</Badge>
+                {post.tags.map(tag => (
+                  <Badge key={tag.id} variant="outline">{tag.name}</Badge>
+                ))}
               </div>
               
               <div className="flex items-center space-x-4">
                 <span className="text-sm text-gray-500 dark:text-gray-400">Share:</span>
                 <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-                  <i className="fab fa-twitter"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                  </svg>
                 </a>
                 <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-                  <i className="fab fa-facebook"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
                 </a>
                 <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-                  <i className="fab fa-linkedin"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
                 </a>
               </div>
             </div>
@@ -256,45 +223,40 @@ export default function BlogPost() {
                 Get the latest blogs and updates delivered to your inbox.
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
-                <Input placeholder="Enter your email" type="email" className="flex-grow" />
+                <input 
+                  placeholder="Enter your email" 
+                  type="email" 
+                  className="flex-grow px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" 
+                />
                 <Button>Subscribe</Button>
               </div>
             </div>
             
-            <div>
-              <h3 className="text-xl font-bold mb-6">Related Articles</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <img 
-                    src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-                    alt="10 SEO Techniques for 2023" 
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4">
-                    <h4 className="font-bold mb-2">10 SEO Techniques for 2023</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
-                      Discover the latest SEO strategies that are driving organic traffic growth in 2023.
-                    </p>
-                    <Button variant="link" className="p-0">Read More</Button>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <img 
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-                    alt="Monetizing Your Blog in 2023" 
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4">
-                    <h4 className="font-bold mb-2">Monetizing Your Blog in 2023</h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
-                      Learn about the most effective ways to generate revenue from your blog content.
-                    </p>
-                    <Button variant="link" className="p-0">Read More</Button>
-                  </div>
+            {relatedPosts.length > 0 && (
+              <div>
+                <h3 className="text-xl font-bold mb-6">Related Articles</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {relatedPosts.map(relatedPost => (
+                    <div key={relatedPost.id} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <img 
+                        src={relatedPost.cover_image} 
+                        alt={relatedPost.title} 
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="p-4">
+                        <h4 className="font-bold mb-2">{relatedPost.title}</h4>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+                          {relatedPost.excerpt}
+                        </p>
+                        <Link href={`/blogs/${relatedPost.slug}`}>
+                          <Button variant="link" className="p-0">Read More</Button>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </AnimatedSection>

@@ -43,10 +43,10 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  // Glass effect classes
+  // Glass effect classes with less obtrusive background
   const glassClasses = `
     fixed top-0 left-0 right-0 z-50 
-    ${isScrolled ? "backdrop-blur-md bg-white/80 dark:bg-gray-900/80" : "bg-transparent"}
+    ${isScrolled ? "backdrop-blur-sm bg-background/50 shadow-sm" : "bg-transparent"}
     transition-all duration-300
   `;
 
