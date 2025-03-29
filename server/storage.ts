@@ -7,9 +7,14 @@ import {
   comments, type Comment, type InsertComment,
   waitlist, type Waitlist, type InsertWaitlist
 } from "@shared/schema";
+import session from "express-session";
+import createMemoryStore from "memorystore";
 
 // Interface for all storage operations
 export interface IStorage {
+  // Session store for authentication
+  sessionStore: session.Store;
+  
   // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -64,6 +69,9 @@ export class MemStorage implements IStorage {
   private postTagIdCounter: number;
   private commentIdCounter: number;
   private waitlistIdCounter: number;
+  
+  // Session store for authentication
+  public sessionStore: session.Store;
 
   constructor() {
     this.users = new Map();
@@ -81,6 +89,12 @@ export class MemStorage implements IStorage {
     this.postTagIdCounter = 1;
     this.commentIdCounter = 1;
     this.waitlistIdCounter = 1;
+    
+    // Initialize the session store
+    const MemoryStore = createMemoryStore(session);
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000, // 24 hours, garbage-collect expired sessions
+    });
     
     // Initialize with default data
     this.initializeDefaults();
@@ -160,7 +174,14 @@ export class MemStorage implements IStorage {
 
   async createUser(user: InsertUser): Promise<User> {
     const id = this.userIdCounter++;
-    const newUser: User = { ...user, id, isAdmin: false };
+    const newUser: User = { 
+      ...user, 
+      id, 
+      isAdmin: false,
+      fullName: user.fullName || null,
+      avatar: user.avatar || null,
+      bio: user.bio || null
+    };
     this.users.set(id, newUser);
     return newUser;
   }
@@ -178,7 +199,11 @@ export class MemStorage implements IStorage {
 
   async createCategory(category: InsertCategory): Promise<Category> {
     const id = this.categoryIdCounter++;
-    const newCategory: Category = { ...category, id };
+    const newCategory: Category = { 
+      ...category, 
+      id,
+      description: category.description || null
+    };
     this.categories.set(id, newCategory);
     return newCategory;
   }
@@ -299,7 +324,11 @@ export class MemStorage implements IStorage {
       id,
       views: 0,
       publishedAt: post.publishedAt || new Date(),
-      metaTags: post.metaTags || {}
+      metaTags: post.metaTags || {},
+      coverImage: post.coverImage || null,
+      isFeatured: post.isFeatured || false,
+      seoTitle: post.seoTitle || null,
+      seoDescription: post.seoDescription || null
     };
     this.posts.set(id, newPost);
     return newPost;
@@ -313,7 +342,7 @@ export class MemStorage implements IStorage {
     
     const updatedPost: Post = {
       ...post,
-      views: post.views + 1
+      views: (post.views || 0) + 1
     };
     
     this.posts.set(id, updatedPost);
@@ -370,7 +399,8 @@ export class MemStorage implements IStorage {
     const newEntry: Waitlist = { 
       ...entry, 
       id,
-      createdAt: new Date()
+      createdAt: new Date(),
+      blogType: entry.blogType || null
     };
     this.waitlistEntries.set(id, newEntry);
     return newEntry;

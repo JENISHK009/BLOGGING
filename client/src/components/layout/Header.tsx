@@ -4,11 +4,23 @@ import ThemeToggle from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogOut, User, Settings } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
+  const { user, logoutMutation } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,22 +93,66 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             
-            <Button
-              className="hidden md:block"
-              variant="default"
-              asChild
-            >
-              <Link href="/auth/login">
-                <span>Sign In</span>
-              </Link>
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar>
+                      <AvatarImage src={user.avatar || undefined} alt={user.fullName || user.username} />
+                      <AvatarFallback className="bg-primary/10 text-primary">
+                        {user.fullName ? user.fullName.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user.fullName || user.username}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => logoutMutation.mutate()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="hidden md:flex space-x-2">
+                <Button variant="outline" asChild>
+                  <Link href="/auth/signup">
+                    <span>Sign Up</span>
+                  </Link>
+                </Button>
+                <Button variant="default" asChild>
+                  <Link href="/auth/login">
+                    <span>Sign In</span>
+                  </Link>
+                </Button>
+              </div>
+            )}
             
             <button 
               className="md:hidden text-gray-600 dark:text-gray-300"
               onClick={toggleMobileMenu}
               aria-label="Open mobile menu"
             >
-              <i className="fas fa-bars text-xl"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
             </button>
           </div>
         </div>
@@ -145,14 +201,45 @@ export default function Header() {
                   Contact
                 </div>
               </Link>
-              <Link href="/auth/login">
-                <div 
-                  className="py-2 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition font-medium text-center cursor-pointer"
-                  onClick={closeMobileMenu}
-                >
-                  Sign In
-                </div>
-              </Link>
+              
+              {user ? (
+                <>
+                  <div className="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
+                    <div className="px-4 py-2">
+                      <p className="font-medium">{user.fullName || user.username}</p>
+                      <p className="text-sm text-muted-foreground">{user.email}</p>
+                    </div>
+                  </div>
+                  <div
+                    className="font-medium py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                    onClick={() => {
+                      logoutMutation.mutate();
+                      closeMobileMenu();
+                    }}
+                  >
+                    Log out
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/signup">
+                    <div 
+                      className="font-medium py-2 px-4 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                      onClick={closeMobileMenu}
+                    >
+                      Sign Up
+                    </div>
+                  </Link>
+                  <Link href="/auth/login">
+                    <div 
+                      className="py-2 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition font-medium text-center cursor-pointer"
+                      onClick={closeMobileMenu}
+                    >
+                      Sign In
+                    </div>
+                  </Link>
+                </>
+              )}
             </nav>
           </motion.div>
         )}

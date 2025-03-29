@@ -108,8 +108,9 @@ const fetchStoryBySlug = (slug: string): WebStory => {
 };
 
 export default function WebStoryView() {
-  const [, params] = useLocation();
-  const slug = params || "";
+  const [location, navigate] = useLocation();
+  const params = location.split('/').pop() || "";
+  const slug = params;
   const [currentStory, setCurrentStory] = useState<WebStory | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -147,7 +148,7 @@ export default function WebStoryView() {
     } else if (e.key === "Escape") {
       setIsExiting(true);
       setTimeout(() => {
-        window.location.href = "/web-stories";
+        navigate("/web-stories");
       }, 300);
     }
   };
@@ -191,7 +192,7 @@ export default function WebStoryView() {
           <div className="text-5xl mb-4 opacity-50">🔍</div>
           <h2 className="text-2xl font-bold mb-2">Story Not Found</h2>
           <p className="mb-6">The story you're looking for doesn't exist or has been removed.</p>
-          <Button onClick={() => window.location.href = "/web-stories"}>
+          <Button onClick={() => navigate("/web-stories")}>
             Back to Web Stories
           </Button>
         </div>
@@ -243,7 +244,7 @@ export default function WebStoryView() {
               onClick={() => {
                 setIsExiting(true);
                 setTimeout(() => {
-                  window.location.href = "/web-stories";
+                  navigate("/web-stories");
                 }, 300);
               }}
               className="absolute top-4 right-4 z-10 text-white p-2 rounded-full bg-black/30 backdrop-blur-sm"
@@ -329,7 +330,7 @@ export default function WebStoryView() {
                     e.stopPropagation();
                     setIsExiting(true);
                     setTimeout(() => {
-                      window.location.href = "/web-stories";
+                      navigate("/web-stories");
                     }, 300);
                   }}
                 >
