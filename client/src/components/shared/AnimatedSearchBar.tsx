@@ -76,10 +76,10 @@ export default function AnimatedSearchBar({
     >
       {/* Search trigger button */}
       <Button
-        variant="ghost"
+        variant="outline"
         size="icon"
         onClick={handleToggleSearch}
-        className="relative rounded-full hover:bg-muted"
+        className="relative rounded-full hover:bg-muted transition-colors duration-300 border-primary/30 hover:border-primary"
         aria-label={isExpanded ? "Close search" : "Open search"}
       >
         <AnimatePresence mode="wait">
@@ -91,7 +91,7 @@ export default function AnimatedSearchBar({
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5 text-primary" />
             </motion.div>
           ) : (
             <motion.div
@@ -101,7 +101,7 @@ export default function AnimatedSearchBar({
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-5 w-5 text-primary" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -112,7 +112,7 @@ export default function AnimatedSearchBar({
         {isExpanded && (
           <motion.form
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "280px", opacity: 1 }}
+            animate={{ width: "320px", opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
             transition={{ 
               type: "spring", 
@@ -124,7 +124,7 @@ export default function AnimatedSearchBar({
             onSubmit={handleSearchSubmit}
           >
             <div className="relative flex items-center">
-              <div className="absolute left-3 text-muted-foreground">
+              <div className="absolute left-3 text-primary">
                 <Search className="h-4 w-4" />
               </div>
               
@@ -134,7 +134,7 @@ export default function AnimatedSearchBar({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={placeholder}
-                className="w-full pl-10 pr-10 h-10 border border-input rounded-full bg-background"
+                className="w-full pl-10 pr-12 h-10 border-2 border-primary/30 focus:border-primary rounded-full bg-background shadow-sm focus:shadow-md transition-all duration-300"
               />
               
               {(searchQuery || showSearchButton) && (
@@ -149,7 +149,7 @@ export default function AnimatedSearchBar({
                     type="submit" 
                     size="icon" 
                     variant="ghost" 
-                    className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+                    className="h-6 w-6 p-0 text-primary hover:text-primary/80 transition-colors duration-300"
                     disabled={!searchQuery.trim()}
                   >
                     <Search className="h-4 w-4" />

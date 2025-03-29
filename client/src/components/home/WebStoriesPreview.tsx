@@ -52,16 +52,7 @@ export default function WebStoriesPreview() {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Auto scroll through stories
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % webStoriesData.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, []);
-  
-  // Handle manual navigation
+  // Handle manual navigation only (removed auto-scroll)
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % webStoriesData.length);
   };
@@ -70,16 +61,25 @@ export default function WebStoriesPreview() {
     setActiveIndex((prev) => (prev - 1 + webStoriesData.length) % webStoriesData.length);
   };
   
-  // Scroll to active story
+  // Show the active story without scrolling the page
   useEffect(() => {
     if (containerRef.current) {
       const storyElements = containerRef.current.querySelectorAll('.story-item');
       if (storyElements[activeIndex]) {
-        storyElements[activeIndex].scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-          inline: 'center'
-        });
+        // Just scroll the horizontal container without affecting page scroll
+        const container = containerRef.current;
+        const item = storyElements[activeIndex] as HTMLElement;
+        
+        if (container && item) {
+          const containerLeft = container.getBoundingClientRect().left;
+          const itemLeft = item.getBoundingClientRect().left;
+          const scrollPosition = container.scrollLeft + (itemLeft - containerLeft - (container.offsetWidth - item.offsetWidth) / 2);
+          
+          container.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     }
   }, [activeIndex]);

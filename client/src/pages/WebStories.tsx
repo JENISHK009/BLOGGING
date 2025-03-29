@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
 // Define static web story data (no DB connection)
@@ -157,27 +158,41 @@ export default function WebStories() {
           </motion.div>
 
           <div className="mb-10">
-            <div className="relative max-w-md mx-auto mb-8">
-              <Input
-                type="text"
-                placeholder="Search web stories..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                <i className="fas fa-search"></i>
+            <div className="relative max-w-lg mx-auto mb-8">
+              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-primary/20 p-2">
+                <div className="relative flex items-center">
+                  <div className="absolute left-4 text-primary">
+                    <Search className="h-5 w-5" />
+                  </div>
+                  <Input
+                    type="text"
+                    placeholder="Search web stories..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-12 pr-4 h-12 border-0 bg-transparent text-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                  {searchTerm && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setSearchTerm("")}
+                      className="absolute right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    >
+                      <X className="h-5 w-5" />
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
             <Tabs defaultValue="All" className="w-full">
-              <TabsList className="flex justify-start overflow-x-auto pb-2 mb-6 max-w-full">
+              <TabsList className="flex justify-start overflow-x-auto pb-2 mb-6 max-w-full bg-white/80 dark:bg-gray-800/80 p-1 rounded-full shadow-sm border border-primary/10">
                 {categories.map((category) => (
                   <TabsTrigger
                     key={category}
                     value={category}
                     onClick={() => setActiveCategory(category)}
-                    className="whitespace-nowrap"
+                    className="whitespace-nowrap rounded-full px-6 transition-all duration-300"
                   >
                     {category}
                   </TabsTrigger>

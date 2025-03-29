@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, X } from "lucide-react";
 import BlogCard from "@/components/blog/BlogCard";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import AnimatedSection from "@/components/shared/AnimatedSection";
@@ -102,14 +103,31 @@ export default function BlogList() {
             
             {/* Main content */}
             <div className="lg:col-span-3">
-              <div className="mb-6">
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full"
-                />
+              <div className="mb-8">
+                <div className="relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-primary/20 p-2">
+                  <div className="relative flex items-center">
+                    <div className="absolute left-4 text-primary">
+                      <Search className="h-5 w-5" />
+                    </div>
+                    <Input
+                      type="text"
+                      placeholder="Search articles..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-12 pr-4 h-12 border-0 bg-transparent text-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                    />
+                    {searchTerm && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setSearchTerm("")}
+                        className="absolute right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      >
+                        <X className="h-5 w-5" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
               
               {isLoading ? (

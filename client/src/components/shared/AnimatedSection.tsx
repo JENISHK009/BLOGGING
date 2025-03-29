@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface AnimatedSectionProps {
@@ -8,14 +8,18 @@ interface AnimatedSectionProps {
 }
 
 export default function AnimatedSection({ children, className, id }: AnimatedSectionProps) {
+  // Ensure pages load at the top
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <motion.section
       id={id}
       className={className}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      viewport={{ once: true, margin: "-100px" }}
     >
       {children}
     </motion.section>
