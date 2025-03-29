@@ -22,4 +22,75 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+  
+  /* Fix text visibility in dark theme */
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .text-gray-700 {
+    @apply text-gray-200;
+  }
+  
+  .dark .text-gray-800 {
+    @apply text-gray-100;
+  }
+  
+  .dark .text-gray-900 {
+    @apply text-white;
+  }
+  
+  /* Ensure proper padding for pages with header */
+  main, section {
+    @apply pt-20;
+  }
+}
+
+/* Prose styles enhancement for blog content */
+.prose h2, .prose h3, .prose h4 {
+  @apply font-serif font-bold mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl;
+}
+
+.prose h3 {
+  @apply text-xl;
+}
+
+.prose p {
+  @apply leading-relaxed mb-6 text-gray-700 dark:text-gray-300;
+}
+
+.prose a {
+  @apply text-primary font-medium underline decoration-2 underline-offset-2 hover:text-primary/80 transition-colors;
+}
+
+.prose ul, .prose ol {
+  @apply my-6 ml-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary/20 pl-4 italic my-6 text-gray-700 dark:text-gray-300;
+}
+
+.prose code {
+  @apply bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded-md text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-gray-800 dark:bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-6;
+}
+
+.prose img {
+  @apply rounded-lg shadow-md my-8;
+}
+
+.dark .prose strong {
+  @apply text-white;
 }

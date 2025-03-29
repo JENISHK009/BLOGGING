@@ -185,20 +185,29 @@ export default function WebStories() {
               </div>
             </div>
 
-            <Tabs defaultValue="All" className="w-full">
-              <TabsList className="flex justify-start overflow-x-auto pb-2 mb-6 max-w-full bg-white/80 dark:bg-gray-800/80 p-1 rounded-full shadow-sm border border-primary/10">
-                {categories.map((category) => (
-                  <TabsTrigger
-                    key={category}
-                    value={category}
-                    onClick={() => setActiveCategory(category)}
-                    className="whitespace-nowrap rounded-full px-6 transition-all duration-300"
-                  >
-                    {category}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+            <div className="mb-8 relative">
+              <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+              
+              <div className="overflow-x-auto hide-scrollbar py-2">
+                <div className="flex space-x-2 px-4 min-w-max">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setActiveCategory(category)}
+                      className={`
+                        whitespace-nowrap px-5 py-2.5 rounded-full transition-all duration-300
+                        ${category === activeCategory 
+                          ? 'bg-primary text-white shadow-md font-medium' 
+                          : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/10 border border-gray-200 dark:border-gray-700'}
+                      `}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {filteredStories.length > 0 ? (

@@ -49,8 +49,8 @@ export default function Header() {
   const glassClasses = `
     fixed top-0 left-0 right-0 z-50 
     ${isScrolled 
-      ? "backdrop-blur-md bg-background/80 shadow-md border-b border-primary/10" 
-      : "bg-transparent backdrop-blur-sm"
+      ? "backdrop-blur-md bg-background/90 shadow-md border-b border-primary/10" 
+      : "bg-background/50 backdrop-blur-md"
     }
     transition-all duration-500
   `;
