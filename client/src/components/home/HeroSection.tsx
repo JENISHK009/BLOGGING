@@ -167,7 +167,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="overflow-hidden relative"
               >
-                <span className="block mb-2">Discover the World</span>
+                <span className="block mb-2">Bloggers Ground:</span>
                 <div className="h-0.5 w-0 bg-primary/30 mt-1 mb-4">
                   <motion.div
                     initial={{ width: 0 }}
@@ -184,7 +184,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 mb-2"
               >
-                of Blogging
+                SEO-Optimized Blogging
               </motion.span>
               
               <motion.span
@@ -193,7 +193,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.8 }}
                 className="block relative"
               >
-                Excellence
+                Platform for Your Success
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
@@ -210,7 +210,7 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 1.0 }}
               className="text-lg md:text-xl text-muted-foreground mb-10 font-serif max-w-xl"
             >
-              Your destination for insightful content, beautifully crafted stories, and the latest trends across technology, lifestyle, travel, and more.
+              Welcome to Bloggers Ground, your premier destination for insightful content and beautifully crafted stories. Our platform offers comprehensive SEO optimization tools, responsive designs for all devices, and advanced analytics to help your content reach wider audiences. Discover the latest trends across technology, lifestyle, travel, and more while building a powerful online presence through our optimized publishing platform.
             </motion.p>
             
             {/* Classic CTA - Email signup with decorative elements */}

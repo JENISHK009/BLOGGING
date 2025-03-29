@@ -16,8 +16,17 @@ export default function SignIn() {
   return (
     <>
       <Helmet>
-        <title>Sign In | BlogWave</title>
-        <meta name="description" content="Sign in to your BlogWave account" />
+        <title>Sign In | Bloggers Ground</title>
+        <meta name="description" content="Sign in to your Bloggers Ground account to access personalized content, comment on articles, and engage with our community of bloggers." />
+        <meta name="keywords" content="login, sign in, bloggers ground account, blogging platform login" />
+        <meta property="og:title" content="Sign In | Bloggers Ground" />
+        <meta property="og:description" content="Sign in to your Bloggers Ground account to access personalized content, comment on articles, and engage with our community of bloggers." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bloggersground.com/auth/login" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Sign In | Bloggers Ground" />
+        <meta name="twitter:description" content="Sign in to your Bloggers Ground account to access personalized content, comment on articles, and engage with our community of bloggers." />
+        <link rel="canonical" href="https://bloggersground.com/auth/login" />
       </Helmet>
       
       <div className="relative min-h-screen py-16 flex justify-center items-center">

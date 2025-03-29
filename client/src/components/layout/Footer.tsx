@@ -8,14 +8,16 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
-                B
-              </div>
-              <span className="font-inter font-bold text-xl">BlogWave</span>
-            </div>
+            <Link href="/">
+              <a className="flex items-center space-x-2 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl">
+                  B
+                </div>
+                <span className="font-serif font-bold text-xl">Bloggers Ground</span>
+              </a>
+            </Link>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              The next-generation blogging platform with top-tier SEO, animations, and modern UI/UX.
+              The next-generation blogging platform with top-tier SEO optimization, beautiful animations, classic design, and modern UI/UX features to help you reach a wider audience.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -138,18 +140,24 @@ export default function Footer() {
         <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} BlogWave. All rights reserved.
+              © {currentYear} Bloggers Ground. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
-                Cookies
-              </a>
+              <Link href="/privacy-policy">
+                <a className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
+                  Privacy Policy
+                </a>
+              </Link>
+              <Link href="/terms-of-service">
+                <a className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
+                  Terms of Service
+                </a>
+              </Link>
+              <Link href="/cookie-policy">
+                <a className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm">
+                  Cookies
+                </a>
+              </Link>
             </div>
           </div>
         </div>

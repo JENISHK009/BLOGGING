@@ -17,7 +17,16 @@ export default function SignUp() {
     <>
       <Helmet>
         <title>Sign Up | Bloggers Ground</title>
-        <meta name="description" content="Create your Bloggers Ground account to access exclusive content" />
+        <meta name="description" content="Create your Bloggers Ground account to access exclusive content, get personalized recommendations, and join our growing community of bloggers and content creators." />
+        <meta name="keywords" content="register, sign up, create account, blogging platform, bloggers ground, join community" />
+        <meta property="og:title" content="Sign Up | Bloggers Ground" />
+        <meta property="og:description" content="Create your Bloggers Ground account to access exclusive content, get personalized recommendations, and join our growing community of bloggers and content creators." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bloggersground.com/auth/signup" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Sign Up | Bloggers Ground" />
+        <meta name="twitter:description" content="Create your Bloggers Ground account to access exclusive content, get personalized recommendations, and join our growing community of bloggers and content creators." />
+        <link rel="canonical" href="https://bloggersground.com/auth/signup" />
       </Helmet>
       
       <div className="relative min-h-screen py-16 flex justify-center items-center">

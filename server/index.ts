@@ -1,8 +1,33 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from 'compression';
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+// Enable gzip compression for better SEO and performance
+app.use(compression());
+
+// 301 redirect for www to non-www (or vice versa based on preference)
+app.use((req, res, next) => {
+  const host = req.hostname;
+  
+  // If the request is coming from 'www' subdomain, redirect to non-www
+  if (host.startsWith('www.')) {
+    const newHost = host.slice(4); // Remove 'www.'
+    return res.redirect(301, `${req.protocol}://${newHost}${req.originalUrl}`);
+  }
+  
+  // For production, you could also do the opposite (non-www to www)
+  // Uncomment the following code to redirect non-www to www
+  /*
+  if (!host.startsWith('www.') && host !== 'localhost' && !host.includes('.replit.dev')) {
+    return res.redirect(301, `${req.protocol}://www.${host}${req.originalUrl}`);
+  }
+  */
+  
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap declarations
+Sitemap: https://bloggersground.com/sitemap-index.xml
+
+# Crawl-delay recommendation for optimal crawling
+Crawl-delay: 10
+
+# Disallow admin and backend pages
+Disallow: /admin/
+Disallow: /api/
+Disallow: /backend/
