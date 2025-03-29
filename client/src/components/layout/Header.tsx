@@ -119,10 +119,10 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
+                  <DropdownMenuLabel className="font-normal dark:text-gray-100">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{user.fullName || user.username}</p>
-                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                      <p className="text-sm font-medium leading-none dark:text-white">{user.fullName || user.username}</p>
+                      <p className="text-xs leading-none text-muted-foreground dark:text-gray-400">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -195,7 +195,7 @@ export default function Header() {
                   }}
                 >
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <Search className="h-4 w-4 text-muted-foreground" />
+                    <Search className="h-4 w-4 text-muted-foreground dark:text-gray-400" />
                   </div>
                   <Input 
                     type="text" 
@@ -208,7 +208,7 @@ export default function Header() {
                     size="icon"
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 h-7 w-7"
                   >
-                    <Search className="h-3.5 w-3.5" />
+                    <Search className="h-3.5 w-3.5 text-gray-700 dark:text-gray-300" />
                   </Button>
                 </form>
               </div>
@@ -250,8 +250,8 @@ export default function Header() {
                 <>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
                     <div className="px-4 py-2">
-                      <p className="font-medium">{user.fullName || user.username}</p>
-                      <p className="text-sm text-muted-foreground">{user.email}</p>
+                      <p className="font-medium dark:text-gray-100">{user.fullName || user.username}</p>
+                      <p className="text-sm text-muted-foreground dark:text-gray-400">{user.email}</p>
                     </div>
                   </div>
                   <div
@@ -268,7 +268,7 @@ export default function Header() {
                 <>
                   <Link href="/auth/signup">
                     <div 
-                      className="font-medium py-2 px-4 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
+                      className="font-medium py-2 px-4 text-primary dark:text-primary/90 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors cursor-pointer"
                       onClick={closeMobileMenu}
                     >
                       Sign Up

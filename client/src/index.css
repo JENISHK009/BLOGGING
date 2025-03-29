@@ -78,6 +78,11 @@
     @apply bg-primary text-white hover:bg-primary/90;
   }
   
+  /* SVG icons in dark mode */
+  .dark svg {
+    @apply text-inherit;
+  }
+  
   /* Fix code blocks and inline code in dark theme */
   .dark pre {
     @apply bg-gray-900 text-gray-100;

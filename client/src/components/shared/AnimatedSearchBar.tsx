@@ -79,7 +79,7 @@ export default function AnimatedSearchBar({
         variant="outline"
         size="icon"
         onClick={handleToggleSearch}
-        className="relative rounded-full hover:bg-muted transition-colors duration-300 border-primary/30 hover:border-primary"
+        className="relative rounded-full hover:bg-muted transition-colors duration-300 border-primary/30 hover:border-primary dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-primary/50"
         aria-label={isExpanded ? "Close search" : "Open search"}
       >
         <AnimatePresence mode="wait">
@@ -124,7 +124,7 @@ export default function AnimatedSearchBar({
             onSubmit={handleSearchSubmit}
           >
             <div className="relative flex items-center">
-              <div className="absolute left-3 text-primary">
+              <div className="absolute left-3 text-primary dark:text-primary">
                 <Search className="h-4 w-4" />
               </div>
               
@@ -134,7 +134,7 @@ export default function AnimatedSearchBar({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={placeholder}
-                className="w-full pl-10 pr-12 h-10 border-2 border-primary/30 focus:border-primary rounded-full bg-background shadow-sm focus:shadow-md transition-all duration-300"
+                className="w-full pl-10 pr-12 h-10 border-2 border-primary/30 focus:border-primary rounded-full bg-background dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 shadow-sm focus:shadow-md transition-all duration-300"
               />
               
               {(searchQuery || showSearchButton) && (
@@ -149,7 +149,7 @@ export default function AnimatedSearchBar({
                     type="submit" 
                     size="icon" 
                     variant="ghost" 
-                    className="h-6 w-6 p-0 text-primary hover:text-primary/80 transition-colors duration-300"
+                    className="h-6 w-6 p-0 text-primary dark:text-primary hover:text-primary/80 dark:hover:text-primary/80 transition-colors duration-300"
                     disabled={!searchQuery.trim()}
                   >
                     <Search className="h-4 w-4" />
