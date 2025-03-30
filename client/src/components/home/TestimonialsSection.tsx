@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
   const testimonials = [
     {
       rating: 5,
-      quote: "BlogWave completely transformed how I create content. The SEO tools have helped me double my organic traffic in just two months!",
+      quote: "Bloggers Ground completely transformed how I create content. The SEO tools have helped me double my organic traffic in just two months!",
       author: {
         name: "Sarah Johnson",
         role: "Food Blogger",
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
     },
     {
       rating: 4.5,
-      quote: "I've tried many blogging platforms, but none have the monetization features of BlogWave. My AdSense revenue has increased by 35% since switching.",
+      quote: "I've tried many blogging platforms, but none have the monetization features of Bloggers Ground. My AdSense revenue has increased by 35% since switching.",
       author: {
         name: "Michelle Patel",
         role: "Lifestyle Blogger",

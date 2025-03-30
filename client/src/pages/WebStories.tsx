@@ -3,9 +3,8 @@ import { Helmet } from "react-helmet";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
 // Define static web story data (no DB connection)
@@ -94,7 +93,7 @@ const webStoriesData = [
 
 // Categories for filtering
 const categories = [
-  "All", "SEO", "Technology", "Blogging", "Social Media", 
+  "All", "SEO", "Technology", "Blogging", "Social Media",
   "Video", "Monetization", "Email", "Planning"
 ];
 
@@ -102,7 +101,6 @@ export default function WebStories() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   
-  // Filter stories based on search term and active category
   const filteredStories = webStoriesData.filter(story => {
     const matchesSearch = story.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = activeCategory === "All" || story.category === activeCategory;
@@ -142,7 +140,7 @@ export default function WebStories() {
         </script>
       </Helmet>
 
-      <AnimatedSection className="py-20 pt-32">
+      <AnimatedSection className="py-20 pt-32 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="max-w-2xl mx-auto text-center mb-12"
@@ -150,18 +148,19 @@ export default function WebStories() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl font-bold mb-4">Web Stories</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Web Stories</h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
               Explore our visual stories with tips, insights, and trends in blogging, 
               SEO, and digital marketing.
             </p>
           </motion.div>
 
+          {/* Search Bar - Enhanced Dark Mode */}
           <div className="mb-10">
             <div className="relative max-w-lg mx-auto mb-8">
-              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-primary/20 p-2">
+              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-primary/20 dark:border-gray-600 p-2">
                 <div className="relative flex items-center">
-                  <div className="absolute left-4 text-primary">
+                  <div className="absolute left-4 text-primary dark:text-primary-200">
                     <Search className="h-5 w-5" />
                   </div>
                   <Input
@@ -169,14 +168,14 @@ export default function WebStories() {
                     placeholder="Search web stories..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 pr-4 h-12 border-0 bg-transparent text-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="pl-12 pr-4 h-12 border-0 bg-transparent text-lg focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-white dark:placeholder:text-gray-400"
                   />
                   {searchTerm && (
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setSearchTerm("")}
-                      className="absolute right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      className="absolute right-3 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white"
                     >
                       <X className="h-5 w-5" />
                     </Button>
@@ -185,9 +184,10 @@ export default function WebStories() {
               </div>
             </div>
 
+            {/* Category Tabs - Enhanced Dark Mode */}
             <div className="mb-8 relative">
-              <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-              <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background dark:from-gray-950 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background dark:from-gray-950 to-transparent z-10 pointer-events-none"></div>
               
               <div className="overflow-x-auto hide-scrollbar py-2">
                 <div className="flex space-x-2 px-4 min-w-max">
@@ -198,8 +198,8 @@ export default function WebStories() {
                       className={`
                         whitespace-nowrap px-5 py-2.5 rounded-full transition-all duration-300
                         ${category === activeCategory 
-                          ? 'bg-primary text-white shadow-md font-medium' 
-                          : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/10 border border-gray-200 dark:border-gray-700'}
+                          ? 'bg-primary text-white shadow-md font-medium dark:bg-primary-400 dark:hover:bg-primary-500' 
+                          : 'bg-white/90 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary-400/20 border border-gray-200 dark:border-gray-700'}
                       `}
                     >
                       {category}
@@ -210,6 +210,7 @@ export default function WebStories() {
             </div>
           </div>
 
+          {/* Stories Grid */}
           {filteredStories.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredStories.map((story, index) => (
@@ -226,35 +227,40 @@ export default function WebStories() {
                 >
                   <Link href={`/web-stories/${story.slug}`}>
                     <div className="cursor-pointer h-full">
-                      <div className="relative aspect-[9/16] rounded-xl overflow-hidden shadow-md mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                      <div className="relative aspect-[9/16] rounded-xl overflow-hidden shadow-md mb-3 group-hover:shadow-xl transition-shadow duration-300 dark:shadow-gray-800/30 ring-1 ring-gray-200 dark:ring-gray-700">
                         <img 
                           src={story.coverImage} 
                           alt={story.title}
                           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
-                          <span className="text-xs text-white/80 mb-1">
+                          <span className="text-xs text-white mb-1">
                             {story.duration} • {story.pages} pages
                           </span>
                           <h3 className="text-lg font-bold text-white leading-tight">
                             {story.title}
                           </h3>
                         </div>
-                        <div className="absolute top-4 left-4 bg-primary/90 text-white text-xs font-medium rounded-full py-1 px-3">
+                        <div className="absolute top-4 left-4 bg-primary/90 dark:bg-primary-400 text-white text-xs font-medium rounded-full py-1 px-3">
                           {story.category}
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-sm text-gray-500 dark:text-gray-300">
                           {new Date(story.date).toLocaleDateString('en-US', {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric'
                           })}
                         </span>
-                        <Button size="sm" variant="ghost" className="text-primary px-2 py-1">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="text-primary dark:text-white bg-transparent hover:bg-primary/10 dark:hover:bg-primary-400/30 px-2 py-1 flex items-center font-medium"
+                        >
                           View Story
-                          <i className="fas fa-arrow-right ml-2 text-xs"></i>
+                          <ArrowRight className="ml-2 h-3 w-3" />
                         </Button>
                       </div>
                     </div>
@@ -263,18 +269,23 @@ export default function WebStories() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 max-w-md mx-auto">
-              <div className="text-5xl mb-4 text-gray-300 dark:text-gray-600">
-                <i className="fas fa-search"></i>
+            <div className="text-center py-12 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+              <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="h-8 w-8 text-gray-400 dark:text-gray-300" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">No stories found</h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-6">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">No stories found</h3>
+              <p className="text-gray-500 dark:text-gray-300 mb-6">
                 {searchTerm 
                   ? "Try adjusting your search terms or selecting a different category." 
                   : "Check back later for new stories."}
               </p>
               {searchTerm && (
-                <Button onClick={() => setSearchTerm("")}>Clear Search</Button>
+                <Button 
+                  onClick={() => setSearchTerm("")}
+                  className="bg-primary hover:bg-primary/90 dark:bg-primary-400 dark:hover:bg-primary-500 text-white"
+                >
+                  Clear Search
+                </Button>
               )}
             </div>
           )}

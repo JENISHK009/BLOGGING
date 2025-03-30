@@ -2,6 +2,21 @@ import express, { type Request, Response, NextFunction } from "express";
 import compression from 'compression';
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables from .env file
+dotenv.config({
+  path: path.resolve(
+    process.cwd(),
+    process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
+  )
+});
+
+// Fallback to default .env if specific env file doesn't exist
+if (!process.env.PORT) {
+  dotenv.config();
+}
 
 const app = express();
 // Enable gzip compression for better SEO and performance
@@ -81,15 +96,14 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
+  // Use PORT from environment variables or fallback to 5000
+  const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
+    log(`Serving on port ${port}`);
   });
 })();

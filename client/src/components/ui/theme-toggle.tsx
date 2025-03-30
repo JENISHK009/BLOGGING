@@ -20,9 +20,9 @@ export default function ThemeToggle() {
         className="flex items-center justify-center"
       >
         {theme === "light" ? (
-          <SunIcon className="h-5 w-5" />
+          <SunIcon className="h-5 w-5 text-gray-800 dark:text-white" />
         ) : (
-          <MoonIcon className="h-5 w-5" />
+          <MoonIcon className="h-5 w-5 text-gray-800 dark:text-white" />
         )}
       </motion.div>
     </Button>

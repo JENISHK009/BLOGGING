@@ -34,7 +34,7 @@ export default function BlogCard({ post, index }: BlogCardProps) {
               {post.category.name}
             </a>
           </Link>
-          <Link href={`/blogs/${post.slug}`}>
+          <Link href={`/blogs/${post.id}`}>
             <a className="block mt-2 mb-3">
               <h3 className="text-xl font-bold line-clamp-2 hover:text-primary transition-colors">
                 {post.title}

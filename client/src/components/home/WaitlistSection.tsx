@@ -25,7 +25,7 @@ type FormValues = z.infer<typeof formSchema>;
 export default function WaitlistSection() {
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,18 +35,18 @@ export default function WaitlistSection() {
       agreeToUpdates: false
     }
   });
-  
+
   const onSubmit = async (data: FormValues) => {
     try {
       // In a real app, we would send this data to the server
       console.log("Form data:", data);
-      
+
       // Show success state
       setIsSuccess(true);
-      
+
       // Reset form
       form.reset();
-      
+
       // Show toast notification
       toast({
         title: "You're on the waitlist!",
@@ -68,7 +68,7 @@ export default function WaitlistSection() {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2 bg-gradient-to-br from-primary to-secondary p-10 text-white">
               <h2 className="font-inter text-3xl font-bold mb-4">Join Our Waitlist</h2>
-              <p className="mb-6">Be among the first to experience BlogWave when we launch. Early waitlist members will receive:</p>
+              <p className="mb-6">Be among the first to experience Bloggers Ground when we launch. Early waitlist members will receive:</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center">
                   <i className="fas fa-check-circle mr-2"></i>
@@ -94,7 +94,7 @@ export default function WaitlistSection() {
                 </p>
               </div>
             </div>
-            
+
             <div className="md:w-1/2 p-10">
               <AnimatePresence mode="wait">
                 {!isSuccess ? (
@@ -113,9 +113,9 @@ export default function WaitlistSection() {
                             <FormItem>
                               <FormLabel>Full Name</FormLabel>
                               <FormControl>
-                                <Input 
-                                  placeholder="Your name" 
-                                  {...field} 
+                                <Input
+                                  placeholder="Your name"
+                                  {...field}
                                   className="w-full px-4 py-3 rounded-lg"
                                 />
                               </FormControl>
@@ -123,7 +123,7 @@ export default function WaitlistSection() {
                             </FormItem>
                           )}
                         />
-                        
+
                         <FormField
                           control={form.control}
                           name="email"
@@ -131,10 +131,10 @@ export default function WaitlistSection() {
                             <FormItem>
                               <FormLabel>Email Address</FormLabel>
                               <FormControl>
-                                <Input 
-                                  placeholder="you@example.com" 
-                                  type="email" 
-                                  {...field} 
+                                <Input
+                                  placeholder="you@example.com"
+                                  type="email"
+                                  {...field}
                                   className="w-full px-4 py-3 rounded-lg"
                                 />
                               </FormControl>
@@ -142,7 +142,7 @@ export default function WaitlistSection() {
                             </FormItem>
                           )}
                         />
-                        
+
                         <FormField
                           control={form.control}
                           name="blogType"
@@ -151,7 +151,7 @@ export default function WaitlistSection() {
                               <FormLabel>Blog Type</FormLabel>
                               <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                  <SelectTrigger>
+                                  <SelectTrigger className="dark:[&>svg]:text-white">
                                     <SelectValue placeholder="Select your blog type" />
                                   </SelectTrigger>
                                 </FormControl>
@@ -169,7 +169,7 @@ export default function WaitlistSection() {
                             </FormItem>
                           )}
                         />
-                        
+
                         <FormField
                           control={form.control}
                           name="agreeToUpdates"
@@ -183,16 +183,16 @@ export default function WaitlistSection() {
                               </FormControl>
                               <div className="space-y-1 leading-none">
                                 <FormLabel>
-                                  I agree to receive updates about BlogWave
+                                  I agree to receive updates about Bloggers Ground
                                 </FormLabel>
                                 <FormMessage />
                               </div>
                             </FormItem>
                           )}
                         />
-                        
-                        <Button 
-                          type="submit" 
+
+                        <Button
+                          type="submit"
                           className="w-full py-3 px-4 text-lg flex justify-center items-center"
                         >
                           <span>Join Waitlist</span>
@@ -213,7 +213,7 @@ export default function WaitlistSection() {
                     </div>
                     <h3 className="font-inter text-xl font-bold mb-2">You're on the Waitlist!</h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-6">
-                      Thank you for joining our waitlist. We'll notify you when BlogWave is ready for you.
+                      Thank you for joining our waitlist. We'll notify you when Bloggers Ground is ready for you.
                     </p>
                     <div className="mb-6">
                       <p className="font-medium mb-2">Share with friends to move up the list:</p>
@@ -238,7 +238,7 @@ export default function WaitlistSection() {
                   </motion.div>
                 )}
               </AnimatePresence>
-              
+
               <div className="mt-6 text-center md:hidden">
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
                   <i className="fas fa-shield-alt mr-1"></i>

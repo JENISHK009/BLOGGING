@@ -62,10 +62,10 @@ export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact Us | BlogWave</title>
-        <meta name="description" content="Get in touch with the BlogWave team for questions, feedback, or partnership opportunities." />
-        <meta property="og:title" content="Contact Us | BlogWave" />
-        <meta property="og:description" content="Get in touch with the BlogWave team for questions, feedback, or partnership opportunities." />
+        <title>Contact Us | Bloggers Ground</title>
+        <meta name="description" content="Get in touch with the Bloggers Ground team for questions, feedback, or partnership opportunities." />
+        <meta property="og:title" content="Contact Us | Bloggers Ground" />
+        <meta property="og:description" content="Get in touch with the Bloggers Ground team for questions, feedback, or partnership opportunities." />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -118,8 +118,8 @@ export default function Contact() {
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold mb-1">Email Us</h3>
                     <p className="text-gray-600 dark:text-gray-300">
-                      hello@blogwave.com<br />
-                      support@blogwave.com
+                      hello@Bloggers Ground.com<br />
+                      support@Bloggers Ground.com
                     </p>
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export default function Contact() {
               allowFullScreen={true} 
               loading="lazy" 
               referrerPolicy="no-referrer-when-downgrade"
-              title="Map to BlogWave office"
+              title="Map to Bloggers Ground office"
             ></iframe>
           </div>
         </div>

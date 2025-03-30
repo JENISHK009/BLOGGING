@@ -48,7 +48,7 @@ export default function FeaturedPosts() {
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Trending Articles</h2>
         </motion.div>
-        
+
         <Carousel className="w-full">
           <CarouselContent>
             {/* Placeholder carousel items */}
@@ -96,15 +96,15 @@ export default function FeaturedPosts() {
       >
         <h2 className="text-2xl md:text-3xl font-bold mb-6">Featured Articles</h2>
       </motion.div>
-      
+
       <Carousel className="w-full">
         <CarouselContent>
           {featuredPosts.map((post) => (
             <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
               <div className="p-1">
                 <div className="overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-md">
-                  <img 
-                    src={post.cover_image} 
+                  <img
+                    src={post.cover_image}
                     alt={post.title}
                     className="aspect-video w-full object-cover"
                   />
@@ -123,10 +123,13 @@ export default function FeaturedPosts() {
                         />
                         <span className="text-sm">{post.author.name}</span>
                       </div>
-                      <Button size="sm" variant="outline" asChild>
-                        <Link href={`/blogs/${post.slug}`}>
-                          <a>Read More</a>
-                        </Link>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="dark:text-white dark:border-white/30"
+                        asChild
+                      >
+                        <Link href={`/blogs/${post.id}`}>Read More</Link>
                       </Button>
                     </div>
                   </div>

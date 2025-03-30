@@ -25,7 +25,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/blogs" component={BlogList} />
-      <Route path="/blogs/:slug" component={BlogPost} />
+      <Route path="/blogs/:id" component={BlogPost} />
       <Route path="/category/:category" component={BlogList} />
       <Route path="/web-stories" component={WebStories} />
       <Route path="/web-stories/:slug" component={WebStoryView} />

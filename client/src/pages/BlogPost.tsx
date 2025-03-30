@@ -19,27 +19,27 @@ marked.setOptions({
 });
 
 export default function BlogPost() {
-  const { slug } = useParams();
+  const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [tableOfContents, setTableOfContents] = useState<{id: string; text: string; level: number}[]>([]);
+  const [tableOfContents, setTableOfContents] = useState<{ id: string; text: string; level: number }[]>([]);
   const [activeHeading, setActiveHeading] = useState("");
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadPost = async () => {
-      if (!slug) return;
-      
+      if (!id) return;
+
       setIsLoading(true);
       try {
-        const data = await fetchPostBySlug(slug);
+        const data = await fetchPostBySlug(id);
         setPost(data);
-        
+
         // Load related posts from the same category
         if (data) {
           const allPosts = await fetchPosts();
-          const filtered = allPosts
+          const filtered: any = allPosts.posts
             .filter(p => p.id !== data.id && p.category.id === data.category.id)
             .slice(0, 3);
           setRelatedPosts(filtered);
@@ -52,44 +52,44 @@ export default function BlogPost() {
     };
 
     loadPost();
-  }, [slug]);
+  }, [id]);
 
   useEffect(() => {
     if (!post) return;
-    
+
     // Parse headings from the markdown content
     const tempDiv = document.createElement('div');
     const renderedContent = marked.parse(post.content);
     if (typeof renderedContent === 'string') {
       tempDiv.innerHTML = renderedContent;
-      
+
       const headings = Array.from(tempDiv.querySelectorAll('h2, h3, h4'));
       const toc = headings.map(heading => {
         // Create id from heading text
         const id = heading.textContent?.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-') || '';
-        
+
         // Set this id to the heading element so we can link to it
         heading.id = id;
-        
+
         return {
           id,
           text: heading.textContent || '',
           level: parseInt(heading.tagName.substring(1)) // extracts the number from 'h2', 'h3', etc.
         };
       });
-      
+
       setTableOfContents(toc);
-      
+
       // Update the post content HTML with the ids added to headings
       const updatedHtml = tempDiv.innerHTML;
       tempDiv.remove();
-      
+
       // Set the updated HTML with heading IDs
       if (post) {
         post.content = updatedHtml;
       }
     }
-    
+
     // Set up intersection observer to highlight active section in TOC
     if (contentRef.current && tableOfContents.length > 0) {
       const observer = new IntersectionObserver(
@@ -102,13 +102,13 @@ export default function BlogPost() {
         },
         { rootMargin: '-100px 0px -70% 0px' }
       );
-      
+
       // Get all heading elements by their IDs
       tableOfContents.forEach(item => {
         const element = document.getElementById(item.id);
         if (element) observer.observe(element);
       });
-      
+
       return () => {
         // Clean up observer
         tableOfContents.forEach(item => {
@@ -177,12 +177,12 @@ export default function BlogPost() {
 
   // Format the date
   const publishDate = new Date(post.published_at);
-  const formattedDate = publishDate.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const formattedDate = publishDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
-  
+
   // Get reading time (roughly 200 words per minute)
   const wordCount = post.content.split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
@@ -201,7 +201,7 @@ export default function BlogPost() {
         {post.tags.map(tag => (
           <meta key={tag.id} property="article:tag" content={tag.name} />
         ))}
-        <link rel="canonical" href={`https://bloggersground.com/blogs/${slug}`} />
+        <link rel="canonical" href={`https://bloggersground.com/blogs/${id}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -224,7 +224,7 @@ export default function BlogPost() {
             },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://bloggersground.com/blogs/${slug}`
+              "@id": `https://bloggersground.com/blogs/${id}`
             }
           })}
         </script>
@@ -241,7 +241,7 @@ export default function BlogPost() {
                 </div>
               </Link>
             </div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -252,16 +252,16 @@ export default function BlogPost() {
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 to-primary/20 dark:from-primary/10 dark:to-primary/30 p-6 md:p-10 mb-8 border border-primary/10">
                 <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 md:w-32 md:h-32 bg-primary/10 rounded-full filter blur-xl"></div>
                 <div className="absolute bottom-0 left-0 -mb-6 -ml-6 w-20 h-20 bg-primary/10 rounded-full filter blur-lg"></div>
-                
+
                 <div className="max-w-3xl relative">
                   <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-gray-900 dark:text-white mb-6">
                     {post.title}
                   </h1>
-                  
+
                   <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 font-serif italic">
                     {post.excerpt}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-5 mb-6">
                     <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
                       <Calendar size={15} className="mr-1.5" />
@@ -276,7 +276,7 @@ export default function BlogPost() {
                       {readingTime} min read
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-wrap items-center gap-3">
                     <Badge variant="secondary" className="px-3 py-1 rounded-full">
                       {post.category.name}
@@ -294,7 +294,7 @@ export default function BlogPost() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 mb-10">
                 <div className="flex items-center">
                   <Avatar className="h-12 w-12 border-2 border-white dark:border-gray-800 shadow-sm">
@@ -308,7 +308,7 @@ export default function BlogPost() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">{post.author.bio.split('.')[0]}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-3 mt-4 md:mt-0">
                   <Button variant="outline" size="sm" className="rounded-full">
                     <Share2 size={15} className="mr-1" />
@@ -321,21 +321,21 @@ export default function BlogPost() {
                 </div>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="rounded-xl overflow-hidden mb-10"
             >
-              <img 
-                src={post.cover_image} 
-                alt={post.title} 
+              <img
+                src={post.cover_image}
+                alt={post.title}
                 className="w-full h-auto object-cover rounded-xl shadow-md"
               />
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -359,8 +359,8 @@ export default function BlogPost() {
                                 href={`#${item.id}`}
                                 className={`
                                   block py-1 pl-${(item.level - 2) * 3} border-l-2 
-                                  ${activeHeading === item.id 
-                                    ? 'border-primary text-primary font-medium dark:text-primary dark:font-semibold' 
+                                  ${activeHeading === item.id
+                                    ? 'border-primary text-primary font-medium dark:text-primary dark:font-semibold'
                                     : 'border-transparent hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary'
                                   }
                                   transition-colors text-sm
@@ -375,7 +375,7 @@ export default function BlogPost() {
                       </CardContent>
                     </Card>
                   )}
-                  
+
                   <Card>
                     <CardContent className="p-4">
                       <h3 className="text-lg font-bold mb-3">Join the Discussion</h3>
@@ -396,16 +396,16 @@ export default function BlogPost() {
                   </Card>
                 </div>
               </aside>
-              
+
               {/* Main content */}
               <div className="order-1 lg:order-2 col-span-1 lg:col-span-3" ref={contentRef}>
-                <div 
+                <div
                   className="prose prose-lg dark:prose-invert max-w-none mb-10 dark:prose-headings:text-white dark:prose-p:text-gray-300 dark:prose-strong:text-gray-200 dark:prose-code:text-gray-200 dark:prose-code:bg-gray-800 dark:prose-code:border-gray-700 dark:prose-pre:bg-gray-900 dark:prose-pre:text-gray-100"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
-                
+
                 <Separator className="my-10" />
-                
+
                 <div className="flex flex-wrap gap-2 mb-10">
                   {post.tags.map(tag => (
                     <Badge key={tag.id} variant="outline" className="px-3 py-1 text-sm rounded-full">
@@ -413,7 +413,7 @@ export default function BlogPost() {
                     </Badge>
                   ))}
                 </div>
-                
+
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
                   <div className="w-full md:w-1/2 bg-primary/10 dark:bg-primary/20 rounded-xl p-6 border border-primary/20">
                     <p className="text-sm text-gray-600 dark:text-gray-400 uppercase font-medium mb-1">Share this article</p>
@@ -441,21 +441,21 @@ export default function BlogPost() {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div className="w-full md:w-1/2 bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                     <p className="text-sm text-gray-600 dark:text-gray-400 uppercase font-medium mb-1">Stay updated</p>
                     <h3 className="text-xl font-bold mb-3">Subscribe to newsletter</h3>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <input 
-                        placeholder="Enter your email" 
-                        type="email" 
-                        className="flex-grow px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" 
+                      <input
+                        placeholder="Enter your email"
+                        type="email"
+                        className="flex-grow px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                       <Button className="dark:bg-primary dark:hover:bg-primary/90 dark:text-white">Subscribe</Button>
                     </div>
                   </div>
                 </div>
-                
+
                 {relatedPosts.length > 0 && (
                   <div className="mb-10">
                     <h3 className="text-2xl font-serif font-bold mb-6 flex items-center">
@@ -464,19 +464,19 @@ export default function BlogPost() {
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       {relatedPosts.map((relatedPost, index) => (
-                        <motion.div 
+                        <motion.div
                           key={relatedPost.id}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
                           className="group"
                         >
-                          <Link href={`/blogs/${relatedPost.slug}`}>
+                          <Link href={`/blogs/${relatedPost.id}`}>
                             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700 h-full">
                               <div className="relative h-48 overflow-hidden">
-                                <img 
-                                  src={relatedPost.cover_image} 
-                                  alt={relatedPost.title} 
+                                <img
+                                  src={relatedPost.cover_image}
+                                  alt={relatedPost.title}
                                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                                 />
                                 <div className="absolute top-3 left-3">
